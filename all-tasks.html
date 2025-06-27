@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All Tasks</title>
+  <link rel="stylesheet" href="menustyles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+</head>
+<body>
+    <button id="toggleSidebar" class="toggle-btn">
+        <i class="fas fa-bars"></i>
+      </button>
+
+  <div class="slide" id="sidebar">
+    <h1>MENU</h1>
+    <ul>
+      <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+      <li><a href="all-tasks.html"><i class="fa fa-tasks"></i> All Tasks</a></li>
+      <li><a href="completed.html"><i class="fa fa-check-circle"></i> Completed Task</a></li>
+      <li><a href="starred.html"><i class="fa fa-star"></i> Starred</a></li>
+      <li><a href="trash.html"><i class="fa fa-trash"></i> Trash</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h2>📋 All Tasks</h2>
+    <p id="taskCount"></p>
+    <ul id="taskList"></ul>
+  </div>
+</body>
+<script>
+    // Sidebar toggle
+    const toggleBtn = document.getElementById("toggleSidebar");
+    const sidebar = document.getElementById("sidebar");
+
+    let isOpen = false;
+    toggleBtn.addEventListener("click", () => {
+    isOpen = !isOpen;
+    sidebar.style.left = isOpen ? "0" : "-180px";
+    });
+
+    // Load and display all tasks
+    const taskListEl = document.getElementById("taskList");
+    const taskCountEl = document.getElementById("taskCount");
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    const allTasks = tasks.filter(task => !task.completed && !task.deleted);
+
+    taskCountEl.textContent = `You have ${allTasks.length} task(s)`;
+
+    allTasks.forEach(task => {
+    const li = document.createElement("li");
+    li.textContent = task.text;
+    li.classList.add("task-item");
+    taskListEl.appendChild(li);
+    });
+</script>
+</html>

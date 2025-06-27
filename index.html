@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App - Home</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Toggle Button -->
+    <button id="toggleSidebar" class="toggle-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="slide" id="sidebar">
+      <h1>MENU</h1>
+      <ul>
+        <li><a href="index.html"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="all-tasks.html"><i class="fa fa-tasks"></i> All Tasks</a></li>
+        <li><a href="completed.html"><i class="fa fa-check-circle"></i> Completed Task</a></li>
+        <li><a href="starred.html"><i class="fa fa-star"></i> Starred</a></li>
+        <li><a href="trash.html"><i class="fa fa-trash"></i> Trash</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Home Content -->
+    <div class="content">
+      <div class="welcome">
+        <h2>Welcome to My To-Do List Dashboard 🎯</h2>
+        <p>Stay organized and boost your productivity. Start by adding a new task below!</p>
+        
+        <!-- Overlay for mobile -->
+          <div class="overlay" id="overlay"></div>
+      
+        
+          <!-- Main Content -->
+          <div class="wrapper" id="mainContent">
+            <div class="todo-container">
+        
+              <!-- Dark Mode Toggle -->
+              <div class="toggle-theme">
+                <label>
+                  <input type="checkbox" id="themeToggle" />
+                  <span id="themeLabel">🌙 Dark Mode</span>
+                </label>
+              </div>
+        
+              <h1>📝 My To-Do List</h1>
+        
+              <!-- Input Section -->
+              <div class="input-group">
+                <input type="text" id="taskInput" placeholder="Add a new task..." />
+                <button id="addTaskBtn">➕</button>
+              </div>
+        
+              <!-- Filters -->
+              <div class="filter-group">
+                <button data-filter="all" class="filter active">All</button>
+                <button data-filter="completed" class="filter">Completed</button>
+              </div>
+        
+              <!-- Task List -->
+              <ul id="taskList"></ul>
+        
+            </div>
+          </div>
+        
+          <script src="script.js"></script>
+        </body>
+        </html>
+
+    <script src="script.js"></script>
+  </body>
+</html>

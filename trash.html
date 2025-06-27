@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trash - To-Do App</title>
+    <link rel="stylesheet" href="menustyles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Sidebar Toggle -->
+    <button id="toggleSidebar" class="toggle-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="slide" id="sidebar">
+      <h1>MENU</h1>
+      <ul>
+        <li>
+          <a href="index.html"><i class="fa fa-home"></i> Home</a>
+        </li>
+        <li>
+          <a href="all-task.html"><i class="fa fa-tasks"></i> All Tasks</a>
+        </li>
+        <li>
+          <a href="completed.html"
+            ><i class="fa fa-check-circle"></i> Completed</a
+          >
+        </li>
+        <li>
+          <a href="starred.html"><i class="fa fa-star"></i> Starred</a>
+        </li>
+        <li>
+          <a href="trash.html"><i class="fa fa-trash"></i> Trash</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+      <h2>🗑 Deleted Tasks</h2>
+      <div class="task-container" id="trashContainer"></div>
+    </div>
+
+    <script>
+      // Sidebar toggle
+      const toggleBtn = document.getElementById("toggleSidebar");
+      const sidebar = document.getElementById("sidebar");
+      let isOpen = false;
+
+      toggleBtn.addEventListener("click", () => {
+        isOpen = !isOpen;
+        sidebar.style.left = isOpen ? "0" : "-180px";
+      });
+
+      // Load and display trash tasks
+      const trashContainer = document.getElementById("trashContainer");
+      let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+      function renderTrash() {
+        trashContainer.innerHTML = "";
+        const trashTasks = tasks.filter((task) => task.deleted);
+
+        if (trashTasks.length === 0) {
+          trashContainer.innerHTML = `<p>No tasks in trash.</p>`;
+        } else {
+          trashTasks.forEach((task, index) => {
+            const div = document.createElement("div");
+            div.className = "task-box";
+            div.innerHTML = `
+            <span>${task.text}</span>
+            <button class="delete-btn" onclick="deletePermanently(${index})">Delete Permanently</button>
+          `;
+            trashContainer.appendChild(div);
+          });
+        }
+      }
+
+      function deletePermanently(trashIndex) {
+        // Filter only trash items
+        const trashTasks = tasks.filter((task) => task.deleted);
+        const realIndex = tasks.findIndex((t) => t === trashTasks[trashIndex]);
+        if (realIndex !== -1) {
+          tasks.splice(realIndex, 1);
+          localStorage.setItem("tasks", JSON.stringify(tasks));
+          renderTrash();
+        }
+      }
+
+      renderTrash();
+    </script>
+  </body>
+</html>

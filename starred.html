@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starred Tasks</title>
+    <link rel="stylesheet" href="menustyles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Sidebar Toggle -->
+    <button id="toggleSidebar" class="toggle-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <div class="slide" id="sidebar">
+      <h1>MENU</h1>
+      <ul>
+        <li>
+          <a href="index.html"><i class="fa fa-home"></i> Home</a>
+        </li>
+        <li>
+          <a href="all-tasks.html"><i class="fa fa-tasks"></i> All Tasks</a>
+        </li>
+        <li>
+          <a href="completed.html"
+            ><i class="fa fa-check-circle"></i> Completed</a
+          >
+        </li>
+        <li>
+          <a href="starred.html"><i class="fa fa-star"></i> Starred</a>
+        </li>
+        <li>
+          <a href="trash.html"><i class="fa fa-trash"></i> Trash</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <h2>⭐ Starred Tasks</h2>
+      <p id="starredCount"></p>
+      <ul id="starredList"></ul>
+    </div>
+
+    <script>
+      // Sidebar toggle
+      const toggleBtn = document.getElementById("toggleSidebar");
+      const sidebar = document.getElementById("sidebar");
+
+      let isOpen = false;
+      toggleBtn.addEventListener("click", () => {
+        isOpen = !isOpen;
+        sidebar.style.left = isOpen ? "0" : "-180px";
+      });
+
+      // Load and filter starred tasks
+      const starredList = document.getElementById("starredList");
+      const starredCount = document.getElementById("starredCount");
+
+      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+      const starredTasks = tasks.filter(
+        (task) => task.starred && !task.deleted
+      );
+
+      starredCount.textContent = `You have ${starredTasks.length} starred task(s)`;
+
+      starredTasks.forEach((task) => {
+        const li = document.createElement("li");
+        li.textContent = task.text;
+        li.classList.add("task-item");
+        starredList.appendChild(li);
+      });
+    </script>
+  </body>
+</html>
